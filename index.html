@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thiago Okumoto — Builder · Python · Dados · Automação · IA</title>
+  <meta name="description" content="Portfolio de Thiago Okumoto — Desenvolvedor self-taught apaixonado por automação, dados e IA." />
+  <meta property="og:title" content="Thiago Okumoto — Builder · Python · Dados · Automação · IA" />
+  <meta property="og:description" content="Desenvolvedor self-taught. Construo sistemas reais: FastAPI, Docker, CI/CD, automação e dados." />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/162941907?v=4" />
+  <link rel="icon" href="https://avatars.githubusercontent.com/u/162941907?v=4" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ===========================
+       VARIABLES
+    =========================== */
+    :root {
+      --bg:          #030712;
+      --bg-card:     #0d1117;
+      --bg-card-hover: #161b22;
+      --border:      #1f2937;
+      --border-g:    rgba(16, 185, 129, 0.3);
+      --green:       #10b981;
+      --green-light: #34d399;
+      --green-glow:  rgba(16, 185, 129, 0.12);
+      --text:        #e2e8f0;
+      --text-sec:    #9ca3af;
+      --text-muted:  #4b5563;
+      --mono:        'JetBrains Mono', monospace;
+    }
+
+    /* ===========================
+       RESET
+    =========================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: var(--green); text-decoration: none; }
+
+    /* ===========================
+       SCROLLBAR
+    =========================== */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
+
+    /* ===========================
+       GRID DOT BACKGROUND
+    =========================== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, #1a2332 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Green glow blob behind hero */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===========================
+       NAV
+    =========================== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(3, 7, 18, 0.85);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: .88rem;
+      color: var(--green);
+      font-weight: 500;
+      letter-spacing: .02em;
+    }
+
+    .nav-logo span { color: var(--text-sec); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: .82rem;
+      color: var(--text-sec);
+      font-weight: 500;
+      letter-spacing: .03em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+
+    /* ===========================
+       LAYOUT
+    =========================== */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--green);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: .4rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -.02em;
+    }
+
+    .section-line {
+      width: 40px;
+      height: 2px;
+      background: var(--green);
+      border-radius: 2px;
+      margin: .6rem 0 2.75rem;
+    }
+
+    /* ===========================
+       HERO
+    =========================== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 58px;
+    }
+
+    .hero-inner {
+      position: relative;
+      width: 100%;
+    }
+
+    .hero-greeting {
+      font-family: var(--mono);
+      font-size: .95rem;
+      color: var(--green);
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .hero-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+      50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    }
+
+    .hero-name {
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      margin-bottom: .75rem;
+      background: linear-gradient(135deg, #ffffff 0%, var(--green-light) 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-typed-wrap {
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      color: var(--text-sec);
+      margin-bottom: 1.5rem;
+      min-height: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--green);
+      animation: blink .75s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .hero-desc {
+      max-width: 500px;
+      color: var(--text-sec);
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.85;
+    }
+
+    .hero-desc strong { color: var(--green-light); font-weight: 600; }
+
+    .hero-ctas {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
+
+    /* Avatar */
+    .hero-avatar-wrap {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .hero-avatar-ring {
+      position: relative;
+      width: 280px;
+      height: 280px;
+    }
+
+    .hero-avatar-ring::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(var(--green), transparent, var(--green-light), transparent, var(--green));
+      animation: spin 6s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hero-avatar-ring::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: var(--bg);
+    }
+
+    .hero-avatar-ring img {
+      position: absolute;
+      inset: 6px;
+      width: calc(100% - 12px);
+      height: calc(100% - 12px);
+      border-radius: 50%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    /* ===========================
+       BUTTONS
+    =========================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .65rem 1.3rem;
+      border-radius: 8px;
+      font-size: .88rem;
+      font-weight: 600;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all .2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: #030712;
+      border-color: var(--green);
+    }
+    .btn-primary:hover {
+      background: var(--green-light);
+      border-color: var(--green-light);
+      color: #030712;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-sec);
+      border-color: var(--border);
+    }
+    .btn-ghost:hover {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green-glow);
+      transform: translateY(-2px);
+    }
+
+    /* ===========================
+       ABOUT
+    =========================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--text-sec);
+      margin-bottom: 1.1rem;
+      font-size: .97rem;
+    }
+    .about-text strong { color: var(--green-light); font-weight: 600; }
+
+    .about-quote {
+      margin-top: 1.75rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--green);
+      color: var(--text-sec);
+      font-style: italic;
+      font-size: .92rem;
+    }
+
+    .highlights {
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+    }
+
+    .hi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      display: flex;
+      gap: .85rem;
+      align-items: flex-start;
+      transition: border-color .25s, transform .25s;
+    }
+
+    .hi-card:hover {
+      border-color: var(--border-g);
+      transform: translateX(4px);
+    }
+
+    .hi-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      background: var(--green-glow);
+      border: 1px solid var(--border-g);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--green);
+      flex-shrink: 0;
+    }
+
+    .hi-text h4 {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: .15rem;
+    }
+    .hi-text p { font-size: .8rem; color: var(--text-muted); margin: 0; }
+
+    /* ===========================
+       PROJECTS
+    =========================== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .proj-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+      position: relative;
+      overflow: hidden;
+      transition: all .25s ease;
+    }
+
+    .proj-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green) 0%, transparent 80%);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .proj-card:hover {
+      border-color: var(--border-g);
+      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(16, 185, 129, 0.08);
+    }
+
+    .proj-card:hover::after { opacity: 1; }
+
+    .proj-card.featured {
+      border-color: var(--border-g);
+      background: rgba(16, 185, 129, 0.025);
+      grid-column: span 1;
+    }
+
+    .proj-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .proj-icon { font-size: 1.3rem; }
+
+    .proj-actions {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+
+    .badge-star {
+      font-size: .65rem;
+      font-weight: 700;
+      background: var(--green);
+      color: #030712;
+      padding: .2rem .55rem;
+      border-radius: 20px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .proj-gh-link {
+      color: var(--text-muted);
+      font-size: .95rem;
+      transition: color .2s;
+    }
+    .proj-gh-link:hover { color: var(--green); }
+
+    .proj-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.01em;
+    }
+
+    .proj-desc {
+      font-size: .855rem;
+      color: var(--text-sec);
+      flex: 1;
+      line-height: 1.65;
+    }
+
+    .proj-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+      margin-top: .1rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: .68rem;
+      padding: .18rem .55rem;
+      border-radius: 20px;
+      background: rgba(16, 185, 129, 0.07);
+      color: var(--green);
+      border: 1px solid rgba(16, 185, 129, 0.18);
+    }
+
+    /* ===========================
+       STACK
+    =========================== */
+    .stack-section-label {
+      font-family: var(--mono);
+      font-size: .68rem;
+      color: var(--green);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin: 2rem 0 .65rem;
+    }
+    .stack-section-label:first-child { margin-top: 0; }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+      gap: .6rem;
+    }
+
+    .stack-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .7rem .4rem;
+      text-align: center;
+      font-size: .75rem;
+      font-weight: 500;
+      color: var(--text-sec);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .3rem;
+      transition: all .2s;
+      cursor: default;
+    }
+
+    .stack-item i { font-size: 1.35rem; color: var(--green); }
+    .stack-item:hover {
+      border-color: var(--border-g);
+      color: var(--green);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    /* ===========================
+       CONTACT
+    =========================== */
+    .contact-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      text-align: center;
+      max-width: 580px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 200px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+    }
+
+    .contact-box h3 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: .6rem;
+    }
+
+    .contact-box p {
+      color: var(--text-sec);
+      font-size: .95rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .6rem 1.1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-sec);
+      font-size: .88rem;
+      font-weight: 500;
+      transition: all .2s;
+    }
+
+    .social-btn:hover {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green-glow);
+      transform: translateY(-2px);
+    }
+
+    /* ===========================
+       FOOTER
+    =========================== */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 1.75rem;
+      color: var(--text-muted);
+      font-size: .78rem;
+      font-family: var(--mono);
+      border-top: 1px solid var(--border);
+    }
+
+    footer a { color: var(--green); }
+
+    /* ===========================
+       FADE-IN ANIMATION
+    =========================== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ===========================
+       RESPONSIVE
+    =========================== */
+    @media (max-width: 900px) {
+      .hero-avatar-wrap { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .nav-links li:nth-child(-n+2) { display: none; }
+      .container { padding: 4rem 1rem; }
+      .hero-name { font-size: 2.6rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .stack-grid { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); }
+      .contact-box { padding: 2rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <nav>
+    <span class="nav-logo">&lt;<span>okumoto</span> /&gt;</span>
+    <ul class="nav-links">
+      <li><a href="#sobre">sobre</a></li>
+      <li><a href="#projetos">projetos</a></li>
+      <li><a href="#stack">stack</a></li>
+      <li><a href="#contato">contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero">
+    <div class="container" style="padding-top: 0; padding-bottom: 0; width: 100%;">
+      <div class="hero-inner">
+
+        <p class="hero-greeting">
+          <span class="hero-dot"></span>
+          // disponível para projetos &amp; colaborações
+        </p>
+
+        <h1 class="hero-name">Thiago Okumoto</h1>
+
+        <div class="hero-typed-wrap">
+          <span id="typed"></span><span class="cursor"></span>
+        </div>
+
+        <p class="hero-desc">
+          Desenvolvedor <strong>self-taught</strong> apaixonado por <strong>automação</strong>, <strong>dados</strong> e <strong>IA</strong>.
+          Construo sistemas reais que rodam em produção — do backend ao CI/CD,
+          da planilha ao dashboard interativo.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="#projetos" class="btn btn-primary">
+            <i class="fa-solid fa-rocket"></i> Ver projetos
+          </a>
+          <a href="https://github.com/Okumotinho" target="_blank" rel="noopener" class="btn btn-ghost">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+          <a href="https://linkedin.com/in/okumoto-thiago" target="_blank" rel="noopener" class="btn btn-ghost">
+            <i class="fab fa-linkedin"></i> LinkedIn
+          </a>
+        </div>
+
+        <!-- Avatar (hidden on mobile) -->
+        <div class="hero-avatar-wrap">
+          <div class="hero-avatar-ring">
+            <img
+              src="https://avatars.githubusercontent.com/u/162941907?v=4"
+              alt="Thiago Okumoto"
+              loading="eager"
+            />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SOBRE ===================== -->
+  <section id="sobre">
+    <div class="container">
+      <p class="section-label">// sobre mim</p>
+      <h2 class="section-title">Quem sou eu</h2>
+      <div class="section-line"></div>
+
+      <div class="about-grid fade-up">
+        <div class="about-text">
+          <p>
+            Sou um desenvolvedor <strong>self-taught</strong> que aprende construindo coisas reais.
+            Comecei por curiosidade, e hoje transformo ideias em software que funciona — com
+            Python, FastAPI, automação e análise de dados.
+          </p>
+          <p>
+            No dia a dia, gerencio <strong>3 lojas do grupo O Boticário</strong>. Foi lá que nasceu
+            minha obsessão por automação: cada processo manual repetitivo virou um projeto de código.
+            Extrair estoque do ERP, gerar relatórios, analisar performance de vendedoras —
+            tudo automatizado.
+          </p>
+          <p>
+            Estou retomando a graduação em <strong>Ciência da Computação</strong>, combinando
+            a base acadêmica com a visão de quem já coloca código em produção.
+            Aprendizado contínuo não é só um clichê — é meu modo de operação.
+          </p>
+          <blockquote class="about-quote">
+            "O melhor código é o que resolve o problema real de alguém —
+            de preferência, de forma automática."
+          </blockquote>
+        </div>
+
+        <div class="highlights">
+          <div class="hi-card">
+            <div class="hi-icon"><i class="fa-solid fa-brain"></i></div>
+            <div class="hi-text">
+              <h4>Aprendizado contínuo</h4>
+              <p>Self-taught + retomando CS. Aprendo fazendo, e faço aprendendo.</p>
+            </div>
+          </div>
+          <div class="hi-card">
+            <div class="hi-icon"><i class="fa-solid fa-gears"></i></div>
+            <div class="hi-text">
+              <h4>Automação em produção</h4>
+              <p>Sistemas que rodam todos os dias em ambiente real, não só em localhost.</p>
+            </div>
+          </div>
+          <div class="hi-card">
+            <div class="hi-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="hi-text">
+              <h4>Dados & Business Intelligence</h4>
+              <p>Power BI, DuckDB, Python — análise de KPIs de varejo em tempo real.</p>
+            </div>
+          </div>
+          <div class="hi-card">
+            <div class="hi-icon"><i class="fa-solid fa-robot"></i></div>
+            <div class="hi-text">
+              <h4>IA aplicada</h4>
+              <p>GitHub Copilot custom agents, MCPs, IA no fluxo de trabalho real.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJETOS ===================== -->
+  <section id="projetos">
+    <div class="container">
+      <p class="section-label">// projetos</p>
+      <h2 class="section-title">O que estou construindo</h2>
+      <div class="section-line"></div>
+
+      <div class="projects-grid">
+
+        <!-- SKUmetrics — DESTAQUE -->
+        <div class="proj-card featured fade-up">
+          <div class="proj-head">
+            <span class="proj-icon">📦</span>
+            <div class="proj-actions">
+              <span class="badge-star">⭐ destaque</span>
+              <a href="https://github.com/Okumotinho/SKUmetrics" target="_blank" rel="noopener"
+                 class="proj-gh-link" title="Ver no GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+            </div>
+          </div>
+          <h3 class="proj-title">SKUmetrics V5.1</h3>
+          <p class="proj-desc">
+            Plataforma completa de métricas de SKU para varejo. Backend assíncrono com FastAPI +
+            PostgreSQL + SQLAlchemy 2.x, 72 testes pytest, CI/CD com GitHub Actions, Docker
+            multi-stage, WebSocket em tempo real, Curva ABC, GMV, CMV ponderado e importação
+            assíncrona de planilhas Excel.
+          </p>
+          <div class="proj-tags">
+            <span class="tag">FastAPI</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Docker</span>
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">Alembic</span>
+            <span class="tag">asyncpg</span>
+            <span class="tag">Locust</span>
+            <span class="tag">72 testes</span>
+          </div>
+        </div>
+
+        <!-- Automação Estoque SGI -->
+        <div class="proj-card fade-up">
+          <div class="proj-head">
+            <span class="proj-icon">🤖</span>
+            <div class="proj-actions"></div>
+          </div>
+          <h3 class="proj-title">Automação Estoque SGI</h3>
+          <p class="proj-desc">
+            Extrai dados de estoque do ERP SGI (O Boticário) via Playwright e sincroniza
+            automaticamente com Google Sheets. Roda diariamente em múltiplas lojas, sem
+            intervenção humana.
+          </p>
+          <div class="proj-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Playwright</span>
+            <span class="tag">gspread</span>
+            <span class="tag">Google Sheets API</span>
+          </div>
+        </div>
+
+        <!-- Análise de Vendedoras -->
+        <div class="proj-card fade-up">
+          <div class="proj-head">
+            <span class="proj-icon">📊</span>
+            <div class="proj-actions"></div>
+          </div>
+          <h3 class="proj-title">Análise de Vendedoras</h3>
+          <p class="proj-desc">
+            Dashboard HTML + JS puro para análise de performance de vendedoras em lojas
+            O Boticário. Curva ABC por ciclo, ticket médio, risco de estoque e ranking
+            multimarca. 108 testes automatizados com Node.js.
+          </p>
+          <div class="proj-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Chart.js</span>
+            <span class="tag">108 testes</span>
+          </div>
+        </div>
+
+        <!-- Power BI Painel de Entregas -->
+        <div class="proj-card fade-up">
+          <div class="proj-head">
+            <span class="proj-icon">📈</span>
+            <div class="proj-actions"></div>
+          </div>
+          <h3 class="proj-title">Power BI — Painel de Entregas</h3>
+          <p class="proj-desc">
+            Dashboard de controle de entregas em formato PBIP com DAX avançado,
+            schema estrela otimizado, métricas de SLA e drill-through por região e período.
+          </p>
+          <div class="proj-tags">
+            <span class="tag">Power BI</span>
+            <span class="tag">DAX</span>
+            <span class="tag">PBIP</span>
+            <span class="tag">Star Schema</span>
+          </div>
+        </div>
+
+        <!-- Dashboard Autostart -->
+        <div class="proj-card fade-up">
+          <div class="proj-head">
+            <span class="proj-icon">🚀</span>
+            <div class="proj-actions"></div>
+          </div>
+          <h3 class="proj-title">Dashboard Autostart</h3>
+          <p class="proj-desc">
+            Sistema que abre dashboards Streamlit e Power BI automaticamente ao ligar o
+            Windows, usando Playwright assíncrono com agendamento via Task Scheduler.
+          </p>
+          <div class="proj-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Playwright async</span>
+            <span class="tag">Windows</span>
+            <span class="tag">Task Scheduler</span>
+          </div>
+        </div>
+
+        <!-- Etiquetas Zebra -->
+        <div class="proj-card fade-up">
+          <div class="proj-head">
+            <span class="proj-icon">🏷️</span>
+            <div class="proj-actions"></div>
+          </div>
+          <h3 class="proj-title">Gerador de Etiquetas Zebra</h3>
+          <p class="proj-desc">
+            Gerador de etiquetas para impressora Zebra ZT230 em HTML + JS puro, sem
+            dependências. Importa planilhas XLSX com SheetJS, gera ZPL e imprime
+            diretamente pelo browser — zero instalação.
+          </p>
+          <div class="proj-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">SheetJS</span>
+            <span class="tag">ZPL</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== STACK ===================== -->
+  <section id="stack">
+    <div class="container">
+      <p class="section-label">// tecnologias</p>
+      <h2 class="section-title">Stack & Ferramentas</h2>
+      <div class="section-line"></div>
+
+      <div class="fade-up">
+
+        <p class="stack-section-label">🐍 Backend & APIs</p>
+        <div class="stack-grid">
+          <div class="stack-item"><i class="fab fa-python"></i>Python</div>
+          <div class="stack-item"><i class="fa-solid fa-bolt"></i>FastAPI</div>
+          <div class="stack-item"><i class="fa-solid fa-database"></i>PostgreSQL</div>
+          <div class="stack-item"><i class="fa-solid fa-layer-group"></i>SQLAlchemy</div>
+          <div class="stack-item"><i class="fa-solid fa-arrows-rotate"></i>Alembic</div>
+          <div class="stack-item"><i class="fa-solid fa-plug"></i>asyncpg</div>
+          <div class="stack-item"><i class="fa-solid fa-shield-halved"></i>SlowAPI</div>
+        </div>
+
+        <p class="stack-section-label">⚙️ DevOps & Qualidade</p>
+        <div class="stack-grid">
+          <div class="stack-item"><i class="fab fa-docker"></i>Docker</div>
+          <div class="stack-item"><i class="fab fa-github"></i>GH Actions</div>
+          <div class="stack-item"><i class="fa-solid fa-vial"></i>pytest</div>
+          <div class="stack-item"><i class="fa-solid fa-gauge-high"></i>Locust</div>
+          <div class="stack-item"><i class="fab fa-git-alt"></i>Git</div>
+          <div class="stack-item"><i class="fa-solid fa-masks-theater"></i>Playwright</div>
+        </div>
+
+        <p class="stack-section-label">🌐 Frontend & Visualização</p>
+        <div class="stack-grid">
+          <div class="stack-item"><i class="fab fa-html5"></i>HTML5</div>
+          <div class="stack-item"><i class="fab fa-js"></i>JavaScript</div>
+          <div class="stack-item"><i class="fab fa-css3-alt"></i>CSS3</div>
+          <div class="stack-item"><i class="fa-solid fa-chart-bar"></i>Chart.js</div>
+          <div class="stack-item"><i class="fa-solid fa-chart-pie"></i>Power BI</div>
+          <div class="stack-item"><i class="fa-solid fa-calculator"></i>DAX</div>
+        </div>
+
+        <p class="stack-section-label">📊 Dados & Integrações</p>
+        <div class="stack-grid">
+          <div class="stack-item"><i class="fa-solid fa-table"></i>Pandas</div>
+          <div class="stack-item"><i class="fa-solid fa-feather"></i>DuckDB</div>
+          <div class="stack-item"><i class="fab fa-google"></i>Sheets API</div>
+          <div class="stack-item"><i class="fa-solid fa-file-excel"></i>openpyxl</div>
+          <div class="stack-item"><i class="fa-solid fa-robot"></i>Copilot</div>
+          <div class="stack-item"><i class="fa-solid fa-network-wired"></i>MCP</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTATO ===================== -->
+  <section id="contato">
+    <div class="container">
+      <p class="section-label">// contato</p>
+      <h2 class="section-title">Vamos conversar?</h2>
+      <div class="section-line"></div>
+
+      <div class="contact-box fade-up">
+        <h3>Entre em contato 👋</h3>
+        <p>
+          Aberto a projetos, colaborações, ou só uma boa troca sobre
+          automação, dados e tecnologia.
+        </p>
+        <div class="social-links">
+          <a href="https://github.com/Okumotinho" target="_blank" rel="noopener" class="social-btn">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+          <a href="https://linkedin.com/in/okumoto-thiago" target="_blank" rel="noopener" class="social-btn">
+            <i class="fab fa-linkedin"></i> LinkedIn
+          </a>
+          <a href="mailto:okumoto.alt@gmail.com" class="social-btn">
+            <i class="fa-solid fa-envelope"></i> okumoto.alt@gmail.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <p>
+      feito com <span style="color: var(--green)">&#10084;</span> + &#9749; por
+      <a href="https://github.com/Okumotinho">Thiago Okumoto</a> &mdash; 2025
+    </p>
+  </footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script>
+    /* ---- TYPING ANIMATION ---- */
+    const phrases = [
+      'Python Developer',
+      'Automação & Dados',
+      'Builder de Sistemas Reais',
+      'FastAPI · PostgreSQL · Docker',
+      'IA Enthusiast',
+    ];
+
+    let pIdx = 0, cIdx = 0, deleting = false;
+    const el = document.getElementById('typed');
+
+    function type() {
+      const phrase = phrases[pIdx];
+      if (!deleting) {
+        el.textContent = phrase.slice(0, ++cIdx);
+        if (cIdx === phrase.length) {
+          deleting = true;
+          setTimeout(type, 2200);
+          return;
+        }
+      } else {
+        el.textContent = phrase.slice(0, --cIdx);
+        if (cIdx === 0) {
+          deleting = false;
+          pIdx = (pIdx + 1) % phrases.length;
+        }
+      }
+      setTimeout(type, deleting ? 38 : 78);
+    }
+
+    type();
+
+    /* ---- FADE-UP ON SCROLL ---- */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+
+          // Stagger children
+          const children = entry.target.querySelectorAll(
+            '.proj-card, .hi-card, .stack-item'
+          );
+          children.forEach((child, idx) => {
+            child.style.transitionDelay = `${idx * 0.055}s`;
+            child.style.opacity = '0';
+            child.style.transform = 'translateY(16px)';
+            child.style.transition = 'opacity .5s ease, transform .5s ease';
+            setTimeout(() => {
+              child.style.opacity = '1';
+              child.style.transform = 'none';
+            }, 80 + idx * 55);
+          });
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+    /* ---- ACTIVE NAV LINK ---- */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const navObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => {
+            a.style.color = a.getAttribute('href') === `#${entry.target.id}`
+              ? 'var(--green)'
+              : '';
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => navObserver.observe(s));
+  </script>
+
+</body>
+</html>
