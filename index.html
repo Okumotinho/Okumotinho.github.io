@@ -27,10 +27,10 @@
       --bg-card:     #0d1117;
       --bg-card-hover: #161b22;
       --border:      #1f2937;
-      --border-g:    rgba(16, 185, 129, 0.3);
-      --green:       #10b981;
-      --green-light: #34d399;
-      --green-glow:  rgba(16, 185, 129, 0.12);
+      --border-g:    rgba(158, 42, 58, 0.3);
+      --green:       #9e2a3a;
+      --green-light: #c43e52;
+      --green-glow:  rgba(158, 42, 58, 0.12);
       --text:        #e2e8f0;
       --text-sec:    #9ca3af;
       --text-muted:  #4b5563;
@@ -72,7 +72,7 @@
       z-index: 0;
     }
 
-    /* Green glow blob behind hero */
+    /* Red glow blob behind hero */
     body::after {
       content: '';
       position: fixed;
@@ -80,7 +80,7 @@
       right: -200px;
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(158, 42, 58, 0.06) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
@@ -197,20 +197,17 @@
     }
 
     @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
-      50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(158, 42, 58, 0.5); }
+      50% { box-shadow: 0 0 0 6px rgba(158, 42, 58, 0); }
     }
 
     .hero-name {
-      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-size: clamp(2.6rem, 6.5vw, 4.6rem);
       font-weight: 800;
-      line-height: 1.05;
+      line-height: 1.15;
       letter-spacing: -.03em;
       margin-bottom: .75rem;
-      background: linear-gradient(135deg, #ffffff 0%, var(--green-light) 80%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #f1f5f9;
     }
 
     .hero-typed-wrap {
@@ -322,7 +319,7 @@
       border-color: var(--green-light);
       color: #030712;
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+      box-shadow: 0 8px 24px rgba(158, 42, 58, 0.35);
     }
 
     .btn-ghost {
@@ -439,14 +436,14 @@
       border-color: var(--border-g);
       background: var(--bg-card-hover);
       transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(16, 185, 129, 0.08);
+      box-shadow: 0 16px 48px rgba(158, 42, 58, 0.08);
     }
 
     .proj-card:hover::after { opacity: 1; }
 
     .proj-card.featured {
       border-color: var(--border-g);
-      background: rgba(16, 185, 129, 0.025);
+      background: rgba(158, 42, 58, 0.025);
       grid-column: span 1;
     }
 
@@ -508,9 +505,9 @@
       font-size: .68rem;
       padding: .18rem .55rem;
       border-radius: 20px;
-      background: rgba(16, 185, 129, 0.07);
+      background: rgba(158, 42, 58, 0.07);
       color: var(--green);
-      border: 1px solid rgba(16, 185, 129, 0.18);
+      border: 1px solid rgba(158, 42, 58, 0.18);
     }
 
     /* ===========================
@@ -661,7 +658,7 @@
       nav { padding: 0 1rem; }
       .nav-links li:nth-child(-n+2) { display: none; }
       .container { padding: 4rem 1rem; }
-      .hero-name { font-size: 2.6rem; }
+      .hero-name { font-size: 2.4rem; }
       .projects-grid { grid-template-columns: 1fr; }
       .stack-grid { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); }
       .contact-box { padding: 2rem 1.25rem; }
@@ -1023,7 +1020,7 @@
   <footer>
     <p>
       feito com <span style="color: var(--green)">&#10084;</span> + &#9749; por
-      <a href="https://github.com/Okumotinho">Thiago Okumoto</a> &mdash; 2025
+      <a href="https://github.com/Okumotinho">Thiago Okumoto</a> &mdash; 2026
     </p>
   </footer>
 
